@@ -157,6 +157,13 @@
       "output": "box/{{.Provider}}/{{user `vm_name`}}-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "{{ user `vagrantfile_template` }}"
+    },
+    {
+      "keep_input_artifact": false,
+      "only": ["virtualbox-iso"],
+      "output": "box/hyperv/{{user `vm_name`}}-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "type": "virtualbox-to-hyperv",
+      "vagrantfile_template": "{{ user `vagrantfile_template` }}"
     }
   ],
   "provisioners": [
@@ -180,6 +187,7 @@
       "execute_command": "echo '{{ user `ssh_password` }}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
       "scripts": [
         "script/update.sh",
+        "script/hyperv.sh",
         "script/desktop.sh",
         "script/vagrant.sh",
         "script/sshd.sh",
@@ -232,4 +240,3 @@
     "vmware_guest_os_type": "ubuntu-64"
   }
 }
-
